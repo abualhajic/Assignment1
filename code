@@ -1,0 +1,20 @@
+create or replace function salary_till_today(v_salary in number) return number as
+v_daysInThisMonth number(2);
+v_daysEmployeeWorked number(2);
+v_total number(4);
+begin 
+
+v_daysInThisMonth:=round(last_day(sysdate)-trunc(sysdate,'mm')) ;
+v_daysEmployeeWorked:= trunc(sysdate,'dd')-trunc(sysdate,'mm')+1;
+v_total:= v_salary* v_daysEmployeeWorked / v_daysInThisMonth;
+return v_total;
+end;
+-- ------------- 
+declare  
+v_salary number(4); 
+v_salaryToday number(4); 
+begin
+v_salary:=500;
+v_salaryToday:= salary_till_today(v_salary); 
+dbms_output.put_line('Salary of the employee including today would be '|| v_salaryToday||'$'); 
+end; 
